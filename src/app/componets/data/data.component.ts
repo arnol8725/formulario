@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormGroup,FormControl, Validators,FormArray} from '@angular/forms';
 import { Observable } from 'rxjs';
-
+import { EventManager } from '@angular/platform-browser';
+declare var test:any;
 
 @Component({
   selector: 'app-data',
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./data.component.css']
 })       
 export class DataComponent implements OnInit {
-
+  eventManager:any;
   countries: any;
 
   pa= {
@@ -50,6 +51,11 @@ pais:'Inglaterra'
   }
 
   constructor() {
+   
+
+    test();
+   
+
     this.formas = new FormGroup({
       'nombrecompleto': new FormGroup(
         {
@@ -93,11 +99,18 @@ pais:'Inglaterra'
   ngOnInit() {
   }
 
+  get DynamicFormControls() {
+
+    return <FormArray>this.formas.get('pasatiempos');
+  }
+
   agregarPasatiempo(){
     console.log('agregarPasatiempo');
     (<FormArray>this.formas.controls['pasatiempos']).push(
       new FormControl('Dormir',Validators.required)
     );
+
+    
   }
 
   noPeralta(control: FormControl): {[s:string]:boolean}{
