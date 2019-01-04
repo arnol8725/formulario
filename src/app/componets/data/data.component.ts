@@ -53,8 +53,8 @@ pais:'Inglaterra'
   constructor() {
    
 
-    test();
-   
+    let t = test();
+   console.log("el valor de t es",t);
 
     this.formas = new FormGroup({
       'nombrecompleto': new FormGroup(
