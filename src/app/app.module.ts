@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 
 import { TemplateComponent } from './componets/template/template.component';
 import { DataComponent } from './componets/data/data.component'
-import { FormsModule,ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule} from '@angular/http';
 
 
@@ -18,8 +18,9 @@ import { HttpModule} from '@angular/http';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
-    ReactiveFormsModule
+   
    
   ],
   providers: [],

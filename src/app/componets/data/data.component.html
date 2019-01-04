@@ -1,15 +1,23 @@
 <h4>Formularios <small>data</small></h4>
 <hr>
-<form [formGroup]="forma" (ngSumit)="guardarCambio()" novalidate="novalidate ">
+<form [formGroup]="formas" (ngSubmit)="guardarCambio()">
 
-    <div>
+    <div formGroupName="nombrecompleto">
 
-        <div class="form-group row">
+        <div class="form-group row" [ngClass]="{ 'has-danger': (formas.get('nombrecompleto.nombre').errors?.minlength || formas.get('nombrecompleto.nombre').errors?.required) && formas.get('nombrecompleto.nombre').touched }">
             <label class="col-2 col-form-label">Nombre</label>
             <div class="col-8">
 
                 <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre">
+                <div class="form-control-feedback" *ngIf="formas.get('nombrecompleto.nombre').errors?.required && formas.get('nombrecompleto.nombre').touched">
+                    Este campo es requerido
+                </div>
+                <div class="form-control-feedback" *ngIf="formas.get('nombrecompleto.nombre').errors?.minlength">
+                    Por lo menos {{ formas.get('nombrecompleto.nombre').errors.minlength.requiredLength }} caracteres
+                </div>
+                <!-- {{ formas.controls['nombre'].errors.minlength | json }} -->
             </div>
+
         </div>
 
         <div class="form-group row">
@@ -26,23 +34,67 @@
         <label class="col-2 col-form-label">Correo</label>
         <div class="col-md-8">
 
-            <input class="form-control" type="text" placeholder="Correo Electronico" formControlName="email">
+            <input class="form-control" type="email" placeholder="Correo Electronico" formControlName="email">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pasatiempos</label>
+        <div class="col-md-8" formArrayName="pasatiempos">
+            <input *ngFor="let Pasatiempo of formas.controls['pasatiempos'].controls; let i = index" class="form-control" type="text" placeholder="Pasatiempo" [formControlName]="i">
+        </div>
+
+        <button (click)="agregarPasatiempo()" type="button" class="btn btn-outline-primary">Nuevo
+            </button>
+    </div>
+
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pais</label>
+        <div class="col-md-8">
+
+            <select class="form-control" name="pais" formControlName="countries">
+                    <option  value="">Seleccione un pais</option>
+                   <option *ngFor="let pais of paises" [value]="pais.codigo">{{pais.pais}}</option>
+                </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Usuario</label>
+        <div class="col-md-8">
+
+            <input class="form-control" type="text" placeholder="usuario" formControlName="username">
         </div>
     </div>
 
 
 
     <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col-md-8">
+
+            <input class="form-control" type="password" placeholder="Password" formControlName="password1">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Confirmacion</label>
+        <div class="col-md-8">
+
+            <input class="form-control" type="password" placeholder="Password2" formControlName="password2">
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label class="col-2 col-form-label">&nbsp;</label>
         <div class="input-group col-md-8">
-            <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.form.valid">
+            <button type="submit" class="btn btn-outline-primary" [disabled]="!formas.valid">
         Guardar
       </button>
         </div>
     </div>
 
-    <pre>
-      {{ forma }}
-    </pre>
+
+    {{formas.valid}} {{formas.status}}
 
 </form>
